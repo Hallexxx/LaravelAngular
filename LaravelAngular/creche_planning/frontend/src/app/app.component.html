@@ -1,0 +1,13 @@
+<main class="main">
+  <div *ngIf="employees.length > 0">
+    <h2>Liste des employés</h2>
+    <ul>
+      <li *ngFor="let employee of employees">
+        {{ employee.firstname }} {{ employee.lastname }} - Heures de travail : {{ employee.workHours }}
+      </li>
+    </ul>
+  </div>
+</main>
+
+
+<router-outlet />
