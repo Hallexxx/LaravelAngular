@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Navbar latérale -->
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="position-sticky">
+        <div class="text-center py-3">
+          <img src="assets/avatar.png" alt="Avatar" class="rounded-circle" width="80">
+          <h4 *ngIf="user">{{ user.name }}</h4>
+          <div *ngIf="!user">
+            <button class="btn btn-primary btn-sm">Login</button>
+            <button class="btn btn-secondary btn-sm">Register</button>
+          </div>
+        </div>
+        <ul class="nav flex-column">
+          <li class="nav-item" *ngFor="let category of categories">
+            <a class="nav-link" href="#">{{ category.name }}</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main class="col-md-10 ms-sm-auto px-md-4">
+      <!-- Bannière -->
+      <div class="text-center mt-4">
+        <h1 class="display-4">Apprenez et dépassez-vous</h1>
+        <p class="lead">Rejoignez notre plateforme pour explorer de nouvelles connaissances.</p>
+        <input type="text" class="form-control w-50 mx-auto mt-3" placeholder="Recherchez un cours">
+      </div>
+
+      <!-- Section des cours -->
+      <div *ngFor="let category of categories" class="my-5">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{{ category.name }}</h2>
+          <a href="#" class="btn btn-link">Voir plus</a>
+        </div>
+        <div class="d-flex overflow-hidden position-relative">
+          <div *ngFor="let course of courses | filterByCategory: category.id" class="card m-2" style="width: 18rem;">
+            <img [src]="course.imageUrl" class="card-img-top" alt="Course Image">
+            <div class="card-body">
+              <h5 class="card-title">{{ course.title }}</h5>
+              <p class="card-text">{{ course.description }}</p>
+              <button (click)="viewDetails(course.id)" class="btn btn-primary">Détails</button>
+            </div>
+          </div>
+          <!-- Flèche droite -->
+          <button class="btn btn-light position-absolute top-50 end-0 translate-middle-y">
+            &rarr;
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
