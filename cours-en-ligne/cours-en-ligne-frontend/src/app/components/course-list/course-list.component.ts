@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { CourseService } from '../../services/course.service';
+import { FilterByCategoryPipe } from '../../pipes/filter-by-category.pipe'; // Import du pipe
 
 @Component({
   selector: 'app-course-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FilterByCategoryPipe], // Ajout du pipe ici
   templateUrl: './course-list.component.html',
   styleUrls: ['./course-list.component.css'],
   animations: [
@@ -27,12 +28,15 @@ export class CourseListComponent {
   courses: any[] = [];
   categories: any[] = [];
   hoverState: { [key: number]: string } = {};
+  user: { name: string } | null = null;
+  categoriesWithCourses: any[] = [];
+
 
   constructor(private courseService: CourseService) {}
 
   ngOnInit(): void {
-    this.courseService.getCategories().subscribe((data) => {
-      this.categories = data;
+    this.courseService.getCoursesByCategory().subscribe((data) => {
+      this.categoriesWithCourses = data;
     });
 
     this.courseService.getCourses().subscribe((data) => {
@@ -40,7 +44,6 @@ export class CourseListComponent {
       this.courses.forEach(course => this.hoverState[course.id] = 'default');
     });
   }
-
 
   toggleHover(id: number, state: string) {
     this.hoverState[id] = state;

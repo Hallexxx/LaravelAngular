@@ -22,7 +22,8 @@ export class CourseService {
     return this.http.post(this.apiUrl, course);
   }
 
-  getCategories(): Observable<any> {
+  getCoursesByCategory(): Observable<any> {
     return this.http.get(`${this.apiUrl}/categories`);
   }
+
 }
