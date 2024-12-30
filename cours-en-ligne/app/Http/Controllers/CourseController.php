@@ -26,8 +26,7 @@ class CourseController extends Controller
 
     public function getCategories()
     {
-        $categories = Category::with('courses')->get();
-        return response()->json($categories);
+        return Category::with('courses')->get();
     }
 
 }
